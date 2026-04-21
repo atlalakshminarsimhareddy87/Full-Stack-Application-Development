@@ -1,0 +1,247 @@
+# 🧑‍💼 Spring MVC Employee Application (Annotation-Based)
+
+## 📌 Project Description
+
+This is a **basic Spring MVC web application** developed using **Spring Boot and annotation-based configuration (no XML)**.
+The application allows users to enter employee details and displays them using the MVC flow.
+
+---
+
+## 🚀 Technologies Used
+
+* Java
+* Spring Boot
+* Spring MVC
+* Thymeleaf
+* Maven
+
+---
+
+## 📁 Project Structure
+
+```
+employeeapp
+ └── src
+      └── main
+           ├── java
+           │    └── com/example/employeeapp
+           │         ├── model
+           │         │     └── Employee.java
+           │         ├── controller
+           │         │     └── EmployeeController.java
+           │         └── EmployeeAppApplication.java
+           └── resources
+                ├── templates
+                │     ├── form.html
+                │     └── result.html
+                └── application.properties
+```
+
+---
+
+## ⚙️ Step-by-Step Setup
+
+### 1️⃣ Create Project using Spring Initializr
+
+* Project: Maven
+* Language: Java
+* Group: `com.example`
+* Artifact: `employeeapp`
+* Dependencies:
+
+  * Spring Web
+  * Thymeleaf
+
+---
+
+### 2️⃣ Create Employee Model
+
+📄 `Employee.java`
+
+```java
+package com.example.employeeapp.model;
+
+public class Employee {
+
+    private int id;
+    private String name;
+    private String department;
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+}
+```
+
+---
+
+### 3️⃣ Create Controller
+
+📄 `EmployeeController.java`
+
+```java
+package com.example.employeeapp.controller;
+
+import com.example.employeeapp.model.Employee;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class EmployeeController {
+
+    @GetMapping("/")
+    public String showForm(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "form";
+    }
+
+    @PostMapping("/save")
+    public String saveEmployee(@ModelAttribute Employee emp, Model model) {
+        model.addAttribute("emp", emp);
+        return "result";
+    }
+}
+```
+
+---
+
+### 4️⃣ Create View Files
+
+📄 `form.html`
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Form</title>
+</head>
+<body>
+
+<h2>Enter Employee Details</h2>
+
+<form action="/save" method="post">
+    ID: <input type="text" name="id"><br><br>
+    Name: <input type="text" name="name"><br><br>
+    Department: <input type="text" name="department"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+📄 `result.html`
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Result</title>
+</head>
+<body>
+
+<h2>Employee Details</h2>
+
+<p>ID: <span th:text="${emp.id}"></span></p>
+<p>Name: <span th:text="${emp.name}"></span></p>
+<p>Department: <span th:text="${emp.department}"></span></p>
+
+</body>
+</html>
+```
+
+---
+
+### 5️⃣ Main Application Class
+
+📄 `EmployeeAppApplication.java`
+
+```java
+package com.example.employeeapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EmployeeAppApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EmployeeAppApplication.class, args);
+    }
+}
+```
+
+---
+
+## ▶️ Running the Application
+
+### In VS Code / Eclipse:
+
+* Run `EmployeeAppApplication.java`
+
+### Using Terminal:
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+## 🌐 Access the Application
+
+Open browser and go to:
+
+```
+http://localhost:8080/
+```
+
+---
+
+## 🔁 Application Flow (MVC)
+
+1. User opens home page `/`
+2. Controller loads `form.html`
+3. User submits employee details
+4. Controller receives data using `@ModelAttribute`
+5. Data is passed to `result.html`
+6. Employee details are displayed
+
+---
+
+## 🎯 Key Features
+
+* Annotation-based configuration
+* No XML used
+* Simple MVC architecture
+* Form handling with Spring Boot
+
+---
+
+## ⚠️ Common Issues
+
+❌ Templates not loading
+✔ Ensure files are inside `resources/templates`
+
+❌ Port already in use
+✔ Add in `application.properties`:
+
+```
+server.port=8081
+```
+
+---
+
+## ✅ Conclusion
+
+This project demonstrates a simple and clean implementation of **Spring MVC using annotations**, following proper MVC architecture without XML configuration.
+
+---
